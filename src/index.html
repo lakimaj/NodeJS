@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    
+</head>
+<body>
+    <button id="1" onclick="getUsers()"> 
+        Get all Users
+    </button>
+
+    <input id='id' name='name'/>    
+
+    <button id="2" onclick="getUsersById()"> 
+        Get Users by id
+    </button>
+
+    <script>
+        function getUsers () {
+            fetch('http://localhost:3001/users')
+            .then(response => response.json())
+            .then(json => console.log(json))
+        }
+//isto kako gore so so => funkcija
+        const getUsersById = () => {
+            //get input value (DOM) getElementById
+            let userId = document.getElementById("id").value
+
+            fetch('http://localhost:3001/users/' + userId)  //ili  fetch(`http://localhost:3001/users/`${userId})
+            .then(response => response.json())
+            .then(json => console.log(json))
+        }
+    </script>
+    
+    
+</body>
+</html>
