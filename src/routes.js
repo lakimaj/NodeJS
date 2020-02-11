@@ -1,6 +1,3 @@
-// const array = []
-// const obj = {}
-
 function routes (server, localStorage) {
 
 /* request i response se dvata parametri na callbackot na rutata */
@@ -48,26 +45,44 @@ function routes (server, localStorage) {
             }
         })
 
+        server.post('/books/new', (req, res) => {
+            //treba da primi objekt (nova kniga)
+            const data = req.body //ocekuvamne objekt so podatoci
 
+                console.log(data)
 
-//Search Users by Name
-/* server.get('/users/:name', (request, response) => {
-    const array = ['Petko', 'Stanko', 'Laki']
+                if (!data) {
+                    res.status(400).json('Bad request NO DATA Found !!!')
+                }
+                else {
+                    localStorage.push(data)
+                    console.log(localStorage)
+                    res.status(201).json('Succesfully created the entry.')
+                }
+        })
 
-    const name = request.params.name.toLowerCase()
+        server.delete('/books/remove/:isbn', (req, res) => {
+                const found = localStorage.findIndex((element) => {
+                    element.isbn === req.params.isbn
+                })
 
-    const found = array.find((element) => element.toLowerCase() === name)
+                console.log(data)
 
-    if (found) {
-        response.status(200).send(found)
-    }
-    else {
-        response.status(200).send('No data found')
-    }
-}) */
+                if (found) {
+                   localStorage.splice(found, 1) //briseme 1 samo
+                   console.log(localStorage)
+                   res.status(200).json('Succesfully deleted the entry.')
+                }
+                else {
+                    if (req.params.isbn) {
+                        res.status(400).json('Bad request NO DATA Found !!!')
+                    }
+                    else {
+                        res.status(400).json('No such ENTRY !!!')
+                    }
+                }
+        })
 
-// server.post('/')
-// server.delete('/')
 }
 
 module.exports = {

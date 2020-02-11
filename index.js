@@ -5,13 +5,27 @@ const cors = require('cors'); // npm install --save cors vo powershell vo NodeJS
 const router = require('./src/routes');
 //za edna funkcija exportirana router se menuva so routes
 
+const bodyParser = require('body-parser') //used to handle POST requests
+
 const server = express();
 
-const localStorage = {};
+const localStorage = [];
 
-localStorage['1'] = 'Petko' //imeto localStorage e proizvolno
-localStorage['2'] = 'STanko'
-localStorage['3'] = 'Lakiii'
+localStorage.push({
+    isbn: '1',
+    name: 'Crime & Punishment'
+})
+localStorage.push({
+    isbn: '2',
+    name: 'Witcher'
+})
+localStorage.push({
+    isbn: '3',
+    name: 'The lord of the rings'
+})
+
+server.use(bodyParser.urlencoded({ extended: false}))
+server.use(bodyParser.json())
 
 //Isto sto i ...
 /* const localStorage = {
@@ -23,8 +37,6 @@ localStorage['3'] = 'Lakiii'
 server.use(
     cors()
     );
-
-
 
 const port = 3001;
 
