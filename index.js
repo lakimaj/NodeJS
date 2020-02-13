@@ -13,15 +13,21 @@ const localStorage = [];
 
 localStorage.push({
     isbn: '1',
-    name: 'Crime & Punishment'
+    name: 'Crime & Punishment',
+    creationDate: new Date(),
+    author: 'Laki'
 })
 localStorage.push({
     isbn: '2',
-    name: 'Witcher'
+    name: 'Witcher',
+    creationDate: new Date(),
+    author: 'Iki'
 })
 localStorage.push({
     isbn: '3',
-    name: 'The lord of the rings'
+    name: 'The lord of the rings',
+    creationDate: new Date(),
+    author: 'TEst'
 })
 
 server.use(bodyParser.urlencoded({ extended: false}))
