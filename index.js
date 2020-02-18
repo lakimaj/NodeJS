@@ -5,11 +5,15 @@ const cors = require('cors'); // npm install --save cors vo powershell vo NodeJS
 const router = require('./src/routes');
 //za edna funkcija exportirana router se menuva so routes
 
-const bodyParser = require('body-parser') //used to handle POST requests
+const bodyParser = require('body-parser'); //used to handle POST requests
+
+const mongoose = require('mongoose'); //mongodb framework
+
+const models = require('./src/models');
 
 const server = express();
 
-const localStorage = [];
+/* const localStorage = [];
 
 localStorage.push({
     isbn: '1',
@@ -28,7 +32,8 @@ localStorage.push({
     name: 'The lord of the rings',
     creationDate: new Date(),
     author: 'TEst'
-})
+}) */
+
 
 server.use(bodyParser.urlencoded({ extended: false}))
 server.use(bodyParser.json())
@@ -46,7 +51,7 @@ server.use(
 
 const port = 3001;
 
-router.routes(server, localStorage);
+router.routes(server);
 //za edna exportirana funkcija vo routes.js fajl (vidi) tuka se brise router. ostanuva samo routes(server)
 
 const array = ['Petko', 'Stanko', 'Laki']
@@ -55,10 +60,42 @@ const array = ['Petko', 'Stanko', 'Laki']
 localStorage.setItem('2', 'Stanko')
 localStorage.setItem('3', 'Laki') */
 
-server.listen(port, () => {
-        console.log('Server started on port ' + port + ', hello world!') //isto so toa dole
-        console.log(`Server started on port ${port}, hello world!`)
+//za konektiranje so mongoDB
+mongoose.connect(
+    'mongodb+srv://laki:lakicafe@cluster0-cf2wu.mongodb.net/test?retryWrites=true&w=majority',
+    {useNewUrlParser: true, useUnifiedTopology: true}
+    );
+
+const db = mongoose.connection;
+
+db.on('error', (error) => {console.log('Error connecting '+ error)})
+
+db.once('open', () => {
+    console.log('Succefully connected to the Mongo Database');
+    server.listen(port, () => {
+        console.log('Server started on port ' + port + ', hello world!'); //isto so toa dole
+        console.log(`Server started on port ${port}, hello world!`);
         // console.log(array, obj, 'test')
+        //create a document from the book model
+            const firstBook = new models.Book({
+                isbn: 111,
+                title: 'Crime & Punishment',
+                Author: 'Dostyevsky',
+                year: '1866'
+            })
+            //funkcijata moze da se izvrsuva samo vrz dokumenti od modeli
+            // try to save the newly created book in the database
+            firstBook.save((err, book) => {
+                if (err) {
+                    console.log('Data was NOT SAVED: '+ err)
+                }
+                else {
+                    console.log(book)
+                }
+            })
     }
 )
+})
+
+
 

@@ -130,6 +130,11 @@ server.get('/books/get-by-author/:author', (req, res) => {
 
 }
 
+//book schema i modeli :-)
+
+
+
+
 module.exports = {
     routes: routes
     //test: druga 
@@ -138,3 +143,4 @@ module.exports = {
 
 //Za edna funkcija samo 
 // module.exports = routes
+
