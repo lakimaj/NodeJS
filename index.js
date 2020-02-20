@@ -2,14 +2,18 @@ const express = require('express');
 
 const cors = require('cors'); // npm install --save cors vo powershell vo NodeJS proektot
 
-const router = require('./src/routes');
+//const router = require('./src/routes-old');
 //za edna funkcija exportirana router se menuva so routes
+
+const routes = require('./src/routes');
 
 const bodyParser = require('body-parser'); //used to handle POST requests
 
 const mongoose = require('mongoose'); //mongodb framework
 
 const models = require('./src/models');
+
+require('dotenv').config();
 
 const server = express();
 
@@ -51,7 +55,7 @@ server.use(
 
 const port = 3001;
 
-router.routes(server);
+routes(server);
 //za edna exportirana funkcija vo routes.js fajl (vidi) tuka se brise router. ostanuva samo routes(server)
 
 const array = ['Petko', 'Stanko', 'Laki']
@@ -60,9 +64,12 @@ const array = ['Petko', 'Stanko', 'Laki']
 localStorage.setItem('2', 'Stanko')
 localStorage.setItem('3', 'Laki') */
 
+/* console.log(process.env.DB_USER
+    ,process.env.DB_PASS) */
+
 //za konektiranje so mongoDB
 mongoose.connect(
-    'mongodb+srv://laki:lakicafe@cluster0-cf2wu.mongodb.net/test?retryWrites=true&w=majority',
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-cf2wu.mongodb.net/test?retryWrites=true&w=majority`, //backiks navodnici za da se skrie USER i PASS
     {useNewUrlParser: true, useUnifiedTopology: true}
     );
 
@@ -77,22 +84,22 @@ db.once('open', () => {
         console.log(`Server started on port ${port}, hello world!`);
         // console.log(array, obj, 'test')
         //create a document from the book model
-            const firstBook = new models.Book({
+           /*  const firstBook = new models.Book({
                 isbn: 111,
                 title: 'Crime & Punishment',
                 Author: 'Dostyevsky',
                 year: '1866'
-            })
+            }) */
             //funkcijata moze da se izvrsuva samo vrz dokumenti od modeli
             // try to save the newly created book in the database
-            firstBook.save((err, book) => {
+           /*  firstBook.save((err, book) => {
                 if (err) {
                     console.log('Data was NOT SAVED: '+ err)
                 }
                 else {
                     console.log(book)
                 }
-            })
+            }) */
     }
 )
 })
