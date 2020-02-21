@@ -7,7 +7,7 @@ const bookSchema = new mongoose.Schema({ //koga ima 'new' sekogas e klasa
     //Book model template
     isbn: Number,
     title: String,
-    Author: String,
+    author: String,
     year: String
 })
 

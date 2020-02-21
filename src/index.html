@@ -12,16 +12,27 @@
 <body>
 
     <div class="container">
+        <h2>Add a book</h2>
        <br/>
             <input id="isbn" placeholder="ISBN" class="form-control"/> 
        <br/>
-            <input id="name" placeholder="Name" class="form-control"/>
+            <input id="title" placeholder="Title" class="form-control"/>
        <br/>
             <input id="author" placeholder="Author" class="form-control"/>
        <br/>
+            <input id="year" placeholder="Year" class="form-control"/>
+       <br/>
             <button id="submit" placeholder="ISDN" onclick="createNewBook()" class="btn btn-success"> Submit </button>
         <br/>
-            <button id="submit"  onclick="deleteBook()" class="btn btn-danger"> DELETE </button>
+          
+    </div>
+        
+    <div class="container">
+        <h2>Delete a book</h2>
+        <br/>
+            <input id="isbnToDelete" placeholder="ISBN" class="form-control"/> 
+        <br/>
+            <button id="delete"  onclick="deleteBook()" class="btn btn-danger"> DELETE </button>
     </div>
 
     <script>
@@ -29,7 +40,7 @@
 
         fetch(
             
-        `http://localhost:3001/books/remove/${document.getElementById('isbn').value}`, 
+        `http://localhost:3001/remove-book/${document.getElementById('isbnToDelete').value}`, 
 
         {
             method: 'delete', 
@@ -43,13 +54,14 @@
 
             const data = {
                 isbn: document.getElementById('isbn').value,
-                name: document.getElementById('name').value,
-                author: document.getElementById('author').value
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                year: document.getElementById('year').value
             }
 
             fetch(
                 
-            'http://localhost:3001/books/new', //prv parametar
+            'http://localhost:3001/add-book', //prv parametar
             
             {
                 method: 'post', //vtor parametar koj moze da se izvadi nadvor vo const

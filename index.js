@@ -13,6 +13,7 @@ const mongoose = require('mongoose'); //mongodb framework
 
 const models = require('./src/models');
 
+// .env fajlot e konfiguraciski i ne se pusta na git
 require('dotenv').config();
 
 const server = express();
