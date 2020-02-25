@@ -35,6 +35,24 @@
             <button id="delete"  onclick="deleteBook()" class="btn btn-danger"> DELETE </button>
     </div>
 
+        <br/>
+
+        <div class="container">
+            <h2>Add a Author</h2>
+           <br/>
+                <input id="firstName" placeholder="firstName" class="form-control"/> 
+           <br/>
+                <input id="lastName" placeholder="lastName" class="form-control"/>
+           <br/>
+                <input type="date" id="dateOfBirth" placeholder="dateOfBirth" class="form-control"/>
+           <br/>
+                <input type="date" id="dateOfPassing" placeholder="dateOfPassing" class="form-control"/>
+           <br/>
+                <button id="submit" placeholder="ISDN" onclick="createNewAuthor()" class="btn btn-success"> Submit </button>
+            <br/>
+              
+        </div>
+
     <script>
         function deleteBook () {
 
@@ -73,6 +91,32 @@
             .then(response => response.json())
             .then(json => console.log(json))
         }
+
+
+
+        function createNewAuthor () {
+
+            const data = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                dateOfPassing: document.getElementById('dateOfPassing').value
+            }
+
+            fetch(
+                
+            'http://localhost:3001/add-author', //prv parametar
+
+            {
+                method: 'post', //vtor parametar koj moze da se izvadi nadvor vo const
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(json => console.log(json))
+            }
     </script>
      
 </body>
