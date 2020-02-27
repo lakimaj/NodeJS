@@ -52,6 +52,18 @@
             <br/>
               
         </div>
+            <br/>
+        <div class="container">
+                <button id='dl' onclick="download()" class="btn btn-success">Download Manual</button>
+        </div>
+
+        <br/>
+        <div class="container">
+                <textarea id='text' style="display: block"></textarea>
+                <br/>
+                <button id='saveText' class="btn btn-success" onclick="saveText()">SAVE TEXT</button>
+        </div>
+
 
     <script>
         function deleteBook () {
@@ -105,18 +117,48 @@
 
             fetch(
                 
-            'http://localhost:3001/add-author', //prv parametar
+                    'http://localhost:3001/add-author', //prv parametar
 
-            {
-                method: 'post', //vtor parametar koj moze da se izvadi nadvor vo const
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
+                    {
+                        method: 'post', //vtor parametar koj moze da se izvadi nadvor vo const
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }
+            
+                )
+
             .then(response => response.json())
             .then(json => console.log(json))
             }
+
+            function download() {
+                window.open('http://localhost:3001/download-manual', '_blank') //ova pravi get
+            }
+
+            function saveText () {
+
+                let data = document.getElementById('text').value
+
+                fetch(
+                
+                        'http://localhost:3001/upload-file', //prv parametar
+                        
+                        {
+                            method: 'post', //vtor parametar koj moze da se izvadi nadvor vo const
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({data: data})
+                        }
+            
+                    )
+
+            .then(response => response.json())
+            .then(json => console.log(json))
+        }
+            
     </script>
      
 </body>

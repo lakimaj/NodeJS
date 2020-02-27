@@ -1,5 +1,7 @@
 const models = require('./models.js')
 
+const fs = require('fs')
+
 class Services {
     //private
     //protected
@@ -106,6 +108,36 @@ class Services {
         catch (error) {
             res.status(500).json({ message: 'Server error ' + error})
         }
+    }
+
+    getFile (req, res) {
+        const file = fs.createReadStream('./storage/sample.pdf')
+        const size = fs.statSync('./storage/sample.pdf').size
+
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Length': size
+        })
+
+        file.pipe(res)
+    }
+
+    writeFile(req, res) {
+
+        const stream = fs.createWriteStream (
+            './storage/new.txt', { flags: 'a' } //a znaci append
+            ) 
+
+        //const stream = fs.createWriteStream('./storage/new.txt') //ke kreira nov file ako nepostoi , a ako postoi ke go otvori ke go izmeni 
+        
+        stream.once('open', () => {
+            //stream.write('Hello semos! WORLD \n')
+            
+            stream.write(req.body.data)
+            stream.end() //go zatvarame dokumentot odnosno pravime SAVE
+        })
+
+        res.status(200).send('OK')
     }
     
 }

@@ -24,6 +24,13 @@ function routes (server) {
         middleWares.getAllAuthors,
         services.getAllDocs
         )
+    
+        //vidi pdf uploadiraj pdf ili drug file - read file FS and return it as response
+    server.get('/download-manual', services.getFile)
+
+    server.get('/upload-file', services.writeFile)
+
+    server.post('/upload-file', services.writeFile)
 
 }
 
