@@ -30,7 +30,11 @@ function routes (server) {
 
     server.get('/upload-file', services.writeFile)
 
+    server.get('/list-dead-authors', services.listDeadAuthors)
+
     server.post('/upload-file', services.writeFile)
+
+
 
 }
 
