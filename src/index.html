@@ -24,6 +24,7 @@
        <br/>
             <button id="submit" placeholder="ISDN" onclick="createNewBook()" class="btn btn-success"> Submit </button>
         <br/>
+
           
     </div>
         
@@ -38,7 +39,9 @@
         <br/>
 
         <div class="container">
-            <h2>Add a Author</h2>
+                <h2>Add / Edit - Author</h2>
+           <br/>
+                <input type="number" id="newid" placeholder="Enter correct Id" class="form-control"/>
            <br/>
                 <input id="firstName" placeholder="firstName" class="form-control"/> 
            <br/>
@@ -48,7 +51,10 @@
            <br/>
                 <input type="date" id="dateOfPassing" placeholder="dateOfPassing" class="form-control"/>
            <br/>
-                <button id="submit" placeholder="ISDN" onclick="createNewAuthor()" class="btn btn-success"> Submit </button>
+           
+           <span>  <button id="submit" placeholder="ISDN" onclick="createNewAuthor()" class="btn btn-success"> Submit </button>
+            
+                <button id="editsubmit" placeholder="ISDN" onclick="editAuthor()" class="btn btn-success"> Edit Author </button> </span>
             <br/>
               
         </div>
@@ -158,6 +164,34 @@
             .then(response => response.json())
             .then(json => console.log(json))
         }
+
+        function editAuthor () {
+
+            const data = {
+                id: document.getElementById('editsubmit').value,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                dateOfPassing: document.getElementById('dateOfPassing').value
+            }
+
+            fetch(
+                
+                    'http://localhost:3001/edit-author', //prv parametar
+
+                    {
+                        method: 'post', //vtor parametar koj moze da se izvadi nadvor vo const
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }
+            
+                )
+
+            .then(response => response.json())
+            .then(json => console.log(json))
+            }
             
     </script>
      

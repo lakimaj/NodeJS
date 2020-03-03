@@ -150,6 +150,48 @@ class Services {
 
         res.status(200).send('OK')
     }
+
+    async editAuthor (req,res) {
+        
+        try{
+
+            /* if(req.body.id) {
+
+            } */
+            
+            const data = req.body          //samo se stava se u data
+            const found = await models.Author.updateOne(
+                {
+                    __id: data.id
+                },
+                { 
+                firstName: data.firstName, 
+                lastName: data.lastName,
+                dateOfBirth: data.dateOfBirth,
+                dateOfPassing: data.dateOfPassing
+            })  //se srcha u datata seite isbn
+            //vtoriot del so podatocite sto se menuvaat moze da se zameni so { ...req.body }
+            
+            if(found){
+                res.status(200).json({massage:'Suceffully edited Author', data:found})           
+                return
+            }
+            
+            const newAuthor = models.Author(data)    // moze i posle ova .save
+            const saved = await newAuthor.save()
+            
+            if(saved) {
+                res.status(201).json('Succesffully added a new AUTHOR')
+            }
+            else {
+                res.status(400).json('error in the data object')
+            }
+        }
+
+    catch(err){
+        res.status(500).json({massage: 'Server error'+ err})
+    }
+}
     
 }
 

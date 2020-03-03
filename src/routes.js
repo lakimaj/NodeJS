@@ -34,6 +34,8 @@ function routes (server) {
 
     server.post('/upload-file', services.writeFile)
 
+    server.post('/edit-author', services.editAuthor)
+
 
 
 }
