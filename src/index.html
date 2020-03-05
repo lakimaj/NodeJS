@@ -56,7 +56,19 @@
             
                 <button id="editsubmit" placeholder="ISDN" onclick="editAuthor()" class="btn btn-success"> Edit Author </button> </span>
             <br/>
-              
+
+            <br/>
+            <!-- tuka listame avtori -->
+            <div class="container">
+            <select id="authorDropdown" class="form-control">
+
+                <option value="ath"> </option>
+
+            </select>
+            </div>  
+
+            <br/>
+
         </div>
             <br/>
         <div class="container">
@@ -72,6 +84,45 @@
 
 
     <script>
+
+        function generateDropDownAuthors() {
+        fetch (
+
+        'http://localhost:3001/get-all-authors', //prv parametar
+            
+            {
+                method: 'get', //vtor parametar koj moze da se izvadi nadvor vo const
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                
+            })
+
+            .then(response => response.json())
+                .then(authors => {
+                    console.log(authors)
+
+                    let i = 0;
+                    for (i = 0; i < authors.length; i++) { 
+
+                    /*  if (!author[i].dateOfPassing) { */
+                            console.log(authors[i].firstName, authors[i].lastName); 
+                            
+                            var author = document.createElement("OPTION");
+                            var textnode = document.createTextNode( 
+                                `${authors[i].firstName} 
+                                ${authors[i].lastName}`
+                                );
+                            author.appendChild(textnode);
+                            document.getElementById("authorDropdown").appendChild(author);
+                        }
+                    /* } */
+
+        }
+        )
+    }
+    
+
         function deleteBook () {
 
         fetch(
@@ -193,6 +244,9 @@
             .then(json => console.log(json))
             }
             
+
+            generateDropDownAuthors() 
+
     </script>
      
 </body>
